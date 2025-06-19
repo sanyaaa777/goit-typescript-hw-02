@@ -1,7 +1,12 @@
-import { useEffect } from 'react';
+import { useEffect, FC } from 'react';
 import styles from './ErrorMessage.module.css';
 
-function ErrorMessage({ message, onRetry }) {
+type ErrorMessageProps = {
+  message: string;
+  onRetry: () => void;
+};
+
+const ErrorMessage: FC<ErrorMessageProps> = ({ message, onRetry }) => {
   useEffect(() => {
     const timer = setTimeout(() => onRetry(), 4000);
     return () => clearTimeout(timer);
@@ -13,6 +18,6 @@ function ErrorMessage({ message, onRetry }) {
       <button className={styles.retryBtn} onClick={onRetry}>Try again</button>
     </div>
   );
-}
+};
 
 export default ErrorMessage;

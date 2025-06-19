@@ -1,17 +1,34 @@
-import { useEffect } from 'react';
+import { useEffect, FC } from 'react';
 import Modal from 'react-modal';
 import styles from './ImageModal.module.css';
 
 Modal.setAppElement('#root');
 
-function ImageModal({ image, onClose }) {
+type ImageModalProps = {
+  image: {
+    urls: {
+      regular: string;
+    };
+    alt_description: string;
+    user: {
+      name: string;
+    };
+    likes: number;
+    description?: string;
+  } | null;
+  onClose: () => void;
+};
+
+const ImageModal: FC<ImageModalProps> = ({ image, onClose }) => {
   useEffect(() => {
-    const handleEsc = e => {
+    const handleEsc = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose();
     };
     document.addEventListener('keydown', handleEsc);
     return () => document.removeEventListener('keydown', handleEsc);
   }, [onClose]);
+
+  if (!image) return null;
 
   return (
     <Modal
@@ -28,13 +45,21 @@ function ImageModal({ image, onClose }) {
           className={styles.image}
         />
         <div className={styles.info}>
-          <p><strong>Author:</strong> {image.user.name}</p>
-          <p><strong>Likes:</strong> {image.likes}</p>
-          {image.description && <p><strong>Description:</strong> {image.description}</p>}
+          <p>
+            <strong>Author:</strong> {image.user.name}
+          </p>
+          <p>
+            <strong>Likes:</strong> {image.likes}
+          </p>
+          {image.description && (
+            <p>
+              <strong>Description:</strong> {image.description}
+            </p>
+          )}
         </div>
       </div>
     </Modal>
   );
-}
+};
 
 export default ImageModal;

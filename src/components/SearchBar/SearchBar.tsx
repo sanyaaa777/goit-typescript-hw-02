@@ -1,12 +1,20 @@
-import { useState } from 'react';
+import { useState, FC, FormEvent, ChangeEvent } from 'react';
 import styles from './SearchBar.module.css';
 
-function SearchBar({ onSubmit }) {
-  const [value, setValue] = useState('');
+type SearchBarProps = {
+  onSubmit: (query: string) => void;
+};
 
-  const handleSubmit = (e) => {
+const SearchBar: FC<SearchBarProps> = ({ onSubmit }) => {
+  const [value, setValue] = useState<string>('');
+
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     onSubmit(value);
+  };
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setValue(e.target.value);
   };
 
   return (
@@ -18,12 +26,12 @@ function SearchBar({ onSubmit }) {
           autoFocus
           placeholder="Search images and photos"
           value={value}
-          onChange={(e) => setValue(e.target.value)}
+          onChange={handleChange}
         />
         <button type="submit">Search</button>
       </form>
     </header>
   );
-}
+};
 
 export default SearchBar;

@@ -1,7 +1,14 @@
 import ImageCard from '../ImageCard/ImageCard';
 import styles from './ImageGallery.module.css';
+import { FC } from 'react';
+import { Image } from '../../types'; // Тип для зображення
 
-function ImageGallery({ images, onImageClick }) {
+type ImageGalleryProps = {
+  images: Image[];
+  onImageClick: (image: Image) => void;
+};
+
+const ImageGallery: FC<ImageGalleryProps> = ({ images, onImageClick }) => {
   return (
     <ul className={styles.gallery}>
       {images.map((img) => (
@@ -11,6 +18,6 @@ function ImageGallery({ images, onImageClick }) {
       ))}
     </ul>
   );
-}
+};
 
 export default ImageGallery;
