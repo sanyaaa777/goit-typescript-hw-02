@@ -1,4 +1,4 @@
-import { useEffect, FC } from 'react';
+import { FC, useEffect } from 'react';
 import Modal from 'react-modal';
 import styles from './ImageModal.module.css';
 
@@ -9,7 +9,7 @@ type ImageModalProps = {
     urls: {
       regular: string;
     };
-    alt_description: string;
+    alt_description: string | null;
     user: {
       name: string;
     };
@@ -41,7 +41,7 @@ const ImageModal: FC<ImageModalProps> = ({ image, onClose }) => {
       <div className={styles.modalBody}>
         <img
           src={image.urls.regular}
-          alt={image.alt_description}
+          alt={image.alt_description ?? 'Image'}
           className={styles.image}
         />
         <div className={styles.info}>
